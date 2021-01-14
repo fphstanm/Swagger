@@ -79,13 +79,17 @@ class LoginViewController: UIViewController {
     }
     
     private func highlightEmptyFields() {
-        UIView.animate(withDuration: 0.5, animations: ({ [weak self] in
+        let animationDuration: TimeInterval = 0.25
+        let errorColor = #colorLiteral(red: 1, green: 0, blue: 0.009361755543, alpha: 0.3526862158)
+
+        UIView.animate(withDuration: animationDuration) { [weak self] in
             self?.userInfoTextFields.forEach { field in
-                field?.backgroundColor = field?.text?.isEmpty ?? false ? .red : .white
+                field?.backgroundColor = field?.text?.isEmpty ?? false ? errorColor : .white
             }
-        }), completion: { [weak self] _ in
+        }
+        UIView.animate(withDuration: animationDuration, delay: animationDuration) { [weak self] in
             self?.userInfoTextFields.forEach { $0?.backgroundColor = .white }
-        })
+        }
     }
     
     private func setupUserInfoFields(isEnabled enabled: Bool) {
